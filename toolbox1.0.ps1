@@ -14,6 +14,7 @@
 # 1.0		2018.01.12	rahd        Finalized Version 1.0 (No modifications)
 # 1.0.1		2018.02.15	rahd        Added Greeting message
 # 1.1		2018.03.22	rahd        Modified Function ShowServiceStatus
+# 1.2		2018.03.27	rahd        Modified Function StopService
 #
 ########################################################################################################################
 # CURRENT VERSION: 1.1
@@ -37,6 +38,7 @@ Write-Host "Current Version: 1.0.1" -ForegroundColor Yellow
 # VERSION	DATE		INIT       	DESCRIPTION
 # 0.1		2017.06.17	bbhj       	Initial version created
 # 0.2		2017.12.06	rahd       	Modified "Set-Service -Name $service" to "Set-Service -Name $servicestatus.Name"
+# 0.3		2018.03.27	rahd       	Added $force switch and if ($force) statement
 #
 ########################################################################################################################
 function StopService
@@ -47,7 +49,8 @@ function StopService
     [String]$service,
     [Parameter(Mandatory=$True)]
     [String]$server,
-    [String]$startuptype = "Disabled"
+    [String]$startuptype = "Disabled",
+    [switch]$force
     )
 
     $servicestatus = Get-Service -Name $service -ComputerName $server
@@ -57,7 +60,12 @@ function StopService
     }
     Else {
         Write-Host "Stopping $service on $server and setting it to $startuptype"
-        stop-service -inputobject $servicestatus -Force -ErrorAction SilentlyContinue
+        if ($force){
+            stop-service -inputobject $servicestatus -Force -ErrorAction SilentlyContinue
+        }
+        else{
+            stop-service -inputobject $servicestatus -ErrorAction SilentlyContinue
+        }
         Set-Service -Name $servicestatus.Name -ComputerName $server -StartupType $startuptype
     }
 }
