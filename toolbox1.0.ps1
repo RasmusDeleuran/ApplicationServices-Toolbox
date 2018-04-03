@@ -13,13 +13,14 @@
 # 0.5		2017.12.22	rahd       	Modified Function CheckUrl
 # 1.0		2018.01.12	rahd        Finalized Version 1.0 (No modifications)
 # 1.0.1		2018.02.15	rahd        Added Greeting message
+# 1.1		2018.03.22	rahd        Modified Function ShowServiceStatus
 #
 ########################################################################################################################
-
-$currentversion = "1.0.1"
+# CURRENT VERSION: 1.1
+########################################################################################################################
 
 Write-host "Importing Function Library | Toolbox1.0.ps1 | " -ForegroundColor Yellow -NoNewline
-Write-Host "Current Version: $currentversion" -ForegroundColor Yellow
+Write-Host "Current Version: 1.0.1" -ForegroundColor Yellow
 
 ########################################################################################################################
 #
@@ -36,7 +37,6 @@ Write-Host "Current Version: $currentversion" -ForegroundColor Yellow
 # VERSION	DATE		INIT       	DESCRIPTION
 # 0.1		2017.06.17	bbhj       	Initial version created
 # 0.2		2017.12.06	rahd       	Modified "Set-Service -Name $service" to "Set-Service -Name $servicestatus.Name"
-# 0.3		2018.03.27	rahd       	Added $force switch and if ($force) statement
 #
 ########################################################################################################################
 function StopService
@@ -194,6 +194,7 @@ function StartServiceParallel
 # VERSION	DATE		INIT       	DESCRIPTION
 # 0.1		2017.06.17	bbhj       	Initial version created
 # 0.2		2017.12.11	rahd       	Added check for non-existant service
+# 0.3		2018.03.22	rahd       	Added check for .status (Starting and Stoppping)
 #
 ########################################################################################################################
 function ShowServiceStatus
@@ -210,6 +211,12 @@ function ShowServiceStatus
         if(($servicestatus.Status -eq "Running") -or ($servicestatus.Status -eq "Started")){
             Write-Host -ForegroundColor Green "Started"
            }
+        elseif($servicestatus.Status -eq "Starting"){
+            Write-Host -ForegroundColor Yellow "Starting"
+        }
+        elseif($servicestatus.Status -eq "Stopping"){
+            Write-Host -ForegroundColor Red "Stopping"
+        }
         else{
             Write-Host -ForegroundColor Red "Stopped"
         }
