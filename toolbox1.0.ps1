@@ -15,13 +15,14 @@
 # 1.0.1		2018.02.15	rahd        Added Greeting message
 # 1.1		2018.03.22	rahd        Modified Function ShowServiceStatus
 # 1.2		2018.03.27	rahd        Modified Function StopService
+# 1.3		2018.04.04	rahd        Removed function Echo
 #
 ########################################################################################################################
-# CURRENT VERSION: 1.1
-########################################################################################################################
+
+$currentversion = "1.3"
 
 Write-host "Importing Function Library | Toolbox1.0.ps1 | " -ForegroundColor Yellow -NoNewline
-Write-Host "Current Version: 1.0.1" -ForegroundColor Yellow
+Write-Host "Current Version: $currentversion" -ForegroundColor Yellow
 
 ########################################################################################################################
 #
@@ -305,33 +306,6 @@ function ConfirmContinue
             exit
         }
     }
-}
-
-########################################################################################################################
-#
-# Function: Echo
-# Description: Print text message to screen
-#
-# Parameters:
-# -message [message to print to screen]
-# -FrontColor [Text Color Default=White]
-#
-########################################################################################################################
-# MODIFICATIONS
-# VERSION	DATE		INIT       	DESCRIPTION
-# 0.1		2017.06.17	bbhj       	Initial version created
-#
-########################################################################################################################
-function Echo
-{
-    param
-    (
-    [Parameter(Mandatory=$True)]
-    [String]$message,
-    [String]$FrontColor = "White"
-    )
-
-    Write-Host $message -ForegroundColor $FrontColor
 }
 
 ########################################################################################################################
